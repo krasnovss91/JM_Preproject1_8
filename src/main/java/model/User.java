@@ -8,7 +8,6 @@ public class User {
     private String password;
 
 
-
     public User() {
 
     }
@@ -25,7 +24,6 @@ public class User {
         this.login = login;
         this.password = password;
     }
-
 
 
     public long getId() {

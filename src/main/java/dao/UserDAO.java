@@ -19,7 +19,7 @@ public class UserDAO {
         String sql = "SELECT * FROM users";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-            
+
             ResultSet result = preparedStatement.executeQuery();
             while (result.next()) {
                 long idUser = result.getLong(1);
@@ -29,7 +29,7 @@ public class UserDAO {
 
                 allUsers.add(new User(idUser, nameUser, loginUser, passwordUser));
             }
-          result.close();
+            result.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -147,30 +147,20 @@ public class UserDAO {
     }
 
 
- /*   public void createTable() throws SQLException {
-        Statement stmt = connection.createStatement();
-        stmt.execute("CREATE TABLE if NOT EXISTS users (id bigint auto_increment, name varchar(256), login varchar(256), password varchar(256), primary key (id))");
-        stmt.close();
-    } */
-    public void createTable() throws SQLException{
+    public void createTable() throws SQLException {
         String sql = "CREATE TABLE if NOT EXISTS users (id bigint auto_increment, name varchar(256), login varchar(256), password varchar(256), primary key (id))";
-        try(Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-   /* public void dropTable() throws SQLException {
-        Statement stmt = connection.createStatement();
-        stmt.executeUpdate("DROP TABLE if EXISTS users");
-        stmt.close();
-    } */
-    public void dropTable() throws SQLException{
+    public void dropTable() throws SQLException {
         String sql = "DROP TABLE if EXISTS users";
-        try (Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

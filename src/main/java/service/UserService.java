@@ -45,7 +45,6 @@ public class UserService {
         getUserDAO().updateUser(user);
     }
 
-
     public void createTable() throws DBException {
         UserDAO dao = getUserDAO();
         try {

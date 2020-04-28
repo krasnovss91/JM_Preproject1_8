@@ -15,7 +15,7 @@ import java.sql.SQLException;
 @WebServlet("/delete")
 public class DeleteServlet extends HttpServlet {
 
-    private UserService userService  = new UserService();
+    private UserService userService = new UserService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,9 +34,9 @@ public class DeleteServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        resp.sendRedirect("read");;
-        }
-
+        resp.sendRedirect("read");
+        ;
+    }
 
 
 }

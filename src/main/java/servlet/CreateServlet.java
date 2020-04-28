@@ -40,6 +40,7 @@ public class CreateServlet extends HttpServlet {
         resp.sendRedirect("read");
 
     }
+
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {

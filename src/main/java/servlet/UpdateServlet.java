@@ -22,7 +22,6 @@ public class UpdateServlet extends HttpServlet {
         User userToUpdate = userService.getUserById(reqID);
         req.setAttribute("userToUpdate", userToUpdate);
         req.getServletContext().getRequestDispatcher("/jsp/update.jsp").forward(req, resp);
-
     }
 
     @Override
@@ -32,7 +31,6 @@ public class UpdateServlet extends HttpServlet {
         String nameUser = req.getParameter("name");
         String loginUser = req.getParameter("login");
         String passwordUser = req.getParameter("password");
-
 
         User updatedUser = new User(reqId, nameUser, loginUser, passwordUser);
         if (nameUser != null && loginUser != null && passwordUser != null) {
