@@ -35,8 +35,13 @@ public class UpdateServlet extends HttpServlet {
 
 
         User updatedUser = new User(reqId, nameUser, loginUser, passwordUser);
-        if (nameUser != null && loginUser != null && passwordUser != null)
-            userService.updateUser(updatedUser);
+        if (nameUser != null && loginUser != null && passwordUser != null) {
+            try {
+                userService.updateUser(updatedUser);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         resp.sendRedirect("read");
 
     }

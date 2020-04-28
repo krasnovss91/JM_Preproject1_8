@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet("/create")
 public class CreateServlet extends HttpServlet {
@@ -31,7 +32,11 @@ public class CreateServlet extends HttpServlet {
         String loginUser = req.getParameter("login");
         String passwordUser = req.getParameter("password");
         User newUser = new User(nameUser, loginUser, passwordUser);
-        userService.addUser(newUser);
+        try {
+            userService.addUser(newUser);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         resp.sendRedirect("read");
 
     }

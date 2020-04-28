@@ -29,7 +29,7 @@ public class UserService {
         return getUserDAO().getAllUsers();
     }
 
-    public boolean addUser(User user) {
+    public boolean addUser(User user) throws SQLException {
         if (getUserByName(user.getName()) == null) {
             getUserDAO().addUser(user);
             return true;
@@ -37,11 +37,11 @@ public class UserService {
         return false;
     }
 
-    public void deleteUserById(Long id) {
+    public void deleteUserById(Long id) throws SQLException {
         getUserDAO().deleteUserById(id);
     }
 
-    public void updateUser(User user) {
+    public void updateUser(User user) throws SQLException {
         getUserDAO().updateUser(user);
     }
 

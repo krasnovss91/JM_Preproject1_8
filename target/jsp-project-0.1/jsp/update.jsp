@@ -27,7 +27,6 @@
 
         <jsp:useBean id="userToUpdate" scope="request" type="model.User"/>
 
-
         <tr>
             <td align="center" size="20"><p>Текущее значение:</p><h5><c:out value="${userToUpdate.id}"/></h5>
                 <p>Здесь данные не менять!</p>
@@ -52,8 +51,6 @@
 
         </tr>
 
-
-
     </table>
     </form>
     <hr>
@@ -65,12 +62,7 @@
         <input type="submit" value="Read User's List" />
     </form>
 
-
 </div>
-
-
-
-
 
 </body>
 </html>
