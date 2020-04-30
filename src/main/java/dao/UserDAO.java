@@ -10,7 +10,6 @@ public class UserDAO {
 
     private Connection connection;
 
-  //  connection.setAutoCommit(false)
 
     public UserDAO(Connection connection) {
         this.connection = connection;
@@ -38,7 +37,6 @@ public class UserDAO {
         }
 
         return allUsers;
-    //    Savepoint savepointOne = connection.setSavepoint("SavepointOne");
 
     }
 
@@ -109,10 +107,9 @@ public class UserDAO {
 
     public void addUser(User user) throws SQLException {
 
-        connection.setAutoCommit(false);
-        Savepoint savepoint = connection.setSavepoint();
         String sql = "INSERT INTO users (name, login, password) VALUES (?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            connection.setAutoCommit(false);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
@@ -120,17 +117,17 @@ public class UserDAO {
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            connection.rollback(savepoint);
+            connection.rollback();
+        } finally {
+            connection.setAutoCommit(true);
         }
-        connection.setAutoCommit(true);
     }
 
     public void updateUser(User user) throws SQLException {
-        connection.setAutoCommit(false);
-        Savepoint savepoint = connection.setSavepoint();
+
         String sql = "UPDATE users SET name = ?, login = ?, password = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
+            connection.setAutoCommit(false);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
@@ -139,24 +136,26 @@ public class UserDAO {
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            connection.rollback(savepoint);
+            connection.rollback();
+        } finally {
+            connection.setAutoCommit(true);
         }
-       connection.setAutoCommit(true);
     }
 
     public void deleteUserById(Long id) throws SQLException {
-        connection.setAutoCommit(false);
-        Savepoint savepoint = connection.setSavepoint();
+
         String sql = "DELETE FROM users WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            connection.setAutoCommit(false);
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            connection.rollback(savepoint);
+            connection.rollback();
+        } finally {
+            connection.setAutoCommit(true);
         }
-        connection.setAutoCommit(true);
     }
 
 
