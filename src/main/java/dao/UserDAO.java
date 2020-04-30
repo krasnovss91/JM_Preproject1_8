@@ -10,11 +10,14 @@ public class UserDAO {
 
     private Connection connection;
 
+  //  connection.setAutoCommit(false)
+
     public UserDAO(Connection connection) {
         this.connection = connection;
     }
 
-    public List<User> getAllUsers() {
+
+    public List<User> getAllUsers() throws SQLException {
         List<User> allUsers = new ArrayList<>();
         String sql = "SELECT * FROM users";
 
@@ -35,8 +38,9 @@ public class UserDAO {
         }
 
         return allUsers;
-    }
+    //    Savepoint savepointOne = connection.setSavepoint("SavepointOne");
 
+    }
 
     public User getUserById(long id) {
         User user = null;
@@ -104,6 +108,9 @@ public class UserDAO {
 
 
     public void addUser(User user) throws SQLException {
+
+        connection.setAutoCommit(false);
+        Savepoint savepoint = connection.setSavepoint();
         String sql = "INSERT INTO users (name, login, password) VALUES (?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, user.getName());
@@ -113,11 +120,14 @@ public class UserDAO {
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            connection.rollback();
+            connection.rollback(savepoint);
         }
+        connection.setAutoCommit(true);
     }
 
     public void updateUser(User user) throws SQLException {
+        connection.setAutoCommit(false);
+        Savepoint savepoint = connection.setSavepoint();
         String sql = "UPDATE users SET name = ?, login = ?, password = ? WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -129,12 +139,14 @@ public class UserDAO {
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            connection.rollback();
+            connection.rollback(savepoint);
         }
-
+       connection.setAutoCommit(true);
     }
 
     public void deleteUserById(Long id) throws SQLException {
+        connection.setAutoCommit(false);
+        Savepoint savepoint = connection.setSavepoint();
         String sql = "DELETE FROM users WHERE id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
@@ -142,8 +154,9 @@ public class UserDAO {
             connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
-            connection.rollback();
+            connection.rollback(savepoint);
         }
+        connection.setAutoCommit(true);
     }
 
 

@@ -25,7 +25,7 @@ public class UserService {
         return getUserDAO().getUserById(id);
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers() throws SQLException {
         return getUserDAO().getAllUsers();
     }
 
